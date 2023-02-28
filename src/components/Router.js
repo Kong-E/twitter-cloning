@@ -5,14 +5,14 @@ import Auth from "../routes/Auth";
 import Navigation from "./Navigation";
 import Profile from "../routes/Profile";
 
-const Router = ({ isLoggedIn }) => {
+const Router = ({ isLoggedIn, userObj }) => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: isLoggedIn ? (
         <>
           <Navigation />
-          <Home />
+          <Home userObj={userObj} />
         </>
       ) : (
         <>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import auth from "../firebase";
+import { auth } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -52,6 +52,7 @@ const Auth = () => {
       provider = new GithubAuthProvider();
     }
     const data = await signInWithPopup(auth, provider);
+    console.log(data);
   };
 
   return (
