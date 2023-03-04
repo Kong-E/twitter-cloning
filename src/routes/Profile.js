@@ -3,6 +3,7 @@ import { auth, db } from "../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "@firebase/auth";
+import { v4 as uuidv4 } from "uuid";
 
 const Profile = ({ refreshUser, userObj }) => {
   const [myNweets, setMyNweets] = useState([]);
@@ -44,27 +45,52 @@ const Profile = ({ refreshUser, userObj }) => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className="container">
+      <form onSubmit={onSubmit} className="progileForm">
         <input
           type="text"
           value={newName}
           onChange={onChange}
           placeholder="Display name"
+          autoFocus
+          className="formInput"
         />
-        <input type="submit" value="Update" />
+        <input
+          type="submit"
+          value="Update Profile"
+          className="formBtn"
+          style={{
+            marginTop: 10,
+          }}
+        />
       </form>
-      <button onClick={onLogOutClick}>Log Out</button>
+      <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+        Log Out
+      </span>
       {myNweets ? (
         <ul>
           {myNweets.map((element) => (
-            <li key={element.createdAt}>{element.text}</li>
+            <>
+              <div className="nweet" style={{ marginTop: "30px" }}>
+                <h4 key={element.createdAt}>{element.text}</h4>
+                {element.attachmentUrl && (
+                  <img
+                    alt=""
+                    key={uuidv4()}
+                    src={element.attachmentUrl}
+                    width="100px"
+                    height="auto"
+                    className="uploadImg"
+                  />
+                )}
+              </div>
+            </>
           ))}
         </ul>
       ) : (
-        <p>No nweets found.</p>
+        <p style={{ color: "white" }}>No nweets found.</p>
       )}
-    </>
+    </div>
   );
 };
 

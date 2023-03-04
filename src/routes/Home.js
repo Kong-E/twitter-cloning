@@ -31,12 +31,10 @@ const Home = ({ userObj }) => {
     });
   }, []);
 
-  //  console.log(attachment);
-
   return (
-    <>
+    <div className="container">
       <NweetFactory userObj={userObj} />
-      <div>
+      <div style={{ marginTop: "30px" }}>
         <ul>
           {nweets.map((nweet) => (
             <Nweet
@@ -47,7 +45,7 @@ const Home = ({ userObj }) => {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 export default Home;
