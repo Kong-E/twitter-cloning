@@ -1,35 +1,32 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../routes/Home";
 import Auth from "../routes/Auth";
 import Navigation from "./Navigation";
 import Profile from "../routes/Profile";
 
-const Router = ({ isLoggedIn, userObj }) => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: isLoggedIn ? (
-        <>
-          <Navigation />
-          <Home userObj={userObj} />
-        </>
-      ) : (
-        <>
-          <Navigation />
-          <Auth />
-        </>
-      ),
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
-    },
-  ]);
+const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
   return (
     <>
-      <RouterProvider router={router} />
+      <Router>
+        {isLoggedIn && <Navigation userObj={userObj} />}
+        <Routes>
+          {isLoggedIn ? (
+            <>
+              <Route path="/" element={<Home userObj={userObj} />} />
+              <Route
+                path="/profile"
+                element={
+                  <Profile userObj={userObj} refreshUser={refreshUser} />
+                }
+              />
+            </>
+          ) : (
+            <Route path="/" element={<Auth />} />
+          )}
+        </Routes>
+      </Router>
     </>
   );
 };
-export default Router;
+export default AppRouter;
